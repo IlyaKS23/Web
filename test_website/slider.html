@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>Practice 5 - Слайдер</title>
+   <link rel="stylesheet" href="assets/css/layout.css">
+   <link rel="stylesheet" href="assets/css/style.css">
+
+
+   <script src="./assets/js/script.js"></script>
+
+   <script>
+    window.onload = function() {
+        // ви можете зробити скільки завгодно слайдів
+        let slides = [
+            {
+                title: "Google",
+                background: "./public/slider/google.png",
+                link: "http://google.com"
+            }, {
+                title: "Yahoo",
+                background: "./public/slider/yahoo.jpg",
+                link: "http://yahoo.com"
+            }, {
+                title: "Instagram",
+                background: "./public/slider/inst.jpg",
+                link: "http://instagram.com"
+            }
+        ]
+        Slider.initSlider(slides);
+
+        let btnPrev = document.querySelector('.slider-btn__prev');
+        let btnNext = document.querySelector('.slider-btn__next');
+
+        btnPrev.addEventListener('click', function(event) {
+            Slider.prevSlide()
+        })
+
+        btnNext.addEventListener('click', function() {
+            Slider.nextSlide()
+        })
+
+        ///////////
+
+        let showHideBtn = document.querySelector('.show-hide');
+        let sliderDiv = document.querySelector('.slider');
+
+        showHideBtn.addEventListener('click', function() {
+            sliderDiv.classList.toggle('hidden')
+
+            if (sliderDiv.classList.contains('hidden')) {
+                showHideBtn.innerHTML = 'Показать';
+            } else {
+                showHideBtn.innerHTML = 'Спрятать';
+            }
+        })
+
+        //////////
+
+        let toggleBtn = document.querySelector('.toggle-btn')
+        let interval
+
+        toggleBtn.addEventListener('click', function(event) {
+            if (event.target.classList.contains('start')){
+                event.target.innerHTML = 'Стоп';
+                interval = setInterval(()=>{
+                    Slider.nextSlide();
+                },1000)
+            } else {
+                event.target.innerHTML = 'Старт';
+                clearInterval(interval)
+            }
+            event.target.classList.toggle('start')
+        })
+
+        /////
+
+        let sliderBtns = document.querySelectorAll('.singleSlideButton')
+        for (let btn of sliderBtns) {
+            btn.addEventListener('click', function(e) {
+                let id = e.target.id.replace('slider-button-', '')
+                Slider.setSlide(id)
+            })
+        }
+    };
+ </script>
+
+ 
+</head>
+<body>
+<header class="header">
+  <a href="index.html"><img src="assets/img/logo.gif" alt="Karazin"></a>
+</header>
+<div class="container">
+   <main class="center column">
+       <article>
+           <h1>Слайдер</h1>
+           <div class="slider">
+               <div id="slider"></div>
+               <button class="slider-btn slider-btn__prev">Prev</button>
+                <button class="slider-btn slider-btn__next">Next</button>
+                <button class="start toggle-btn">Старт</button>
+           </div>
+          <div>
+            <button class="show-hide">Спрятать</button>
+          </div>
+       </article>
+   </main>
+   <nav class="left column">
+       <h3>Навигация</h3>
+       <ul>
+           <li><a href="index.html">Главная</a></li>
+           <li><a href="about.html">О нас</a></li>
+           <li><a href="slider.html">Слайдер</a></li>
+           <li><a href="media.html">Медиа</a></li>
+           <li><a href="table.html">Таблица</a></li>
+           <li><a href="contact.html">Контакты</a></li>
+       </ul>
+   </nav>
+   <div class="right column">
+       <h3>Right heading</h3>
+       <p></p>
+   </div>
+   <div class="push"></div>
+</div>
+<div class="footer-wrapper">
+   <footer class="footer">
+      <a href="index.html"><img src="assets/img/logo.gif" alt="Karazin"></a>
+   </footer>
+</div>
+</body>
+</html>
